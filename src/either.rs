@@ -4,7 +4,6 @@ use std::io;
 use std::pin::Pin;
 use std::task::{Context, Poll};
 
-#[allow(unused)]
 pub(crate) enum Either<A: Stream, B: Stream> {
     A(A),
     B(B),
@@ -21,6 +20,10 @@ impl<A: Stream, B: Stream> AsyncRead for Either<A, B> {
             Either::B(b) => Pin::new(b).poll_read(cx, buf),
         }
     }
+}
+
+trait StreamEitherExt<A: Stream> {
+    fn or<B: Stream>(other: B) -> Either<A, B>;
 }
 
 impl<A: Stream, B: Stream> AsyncWrite for Either<A, B> {

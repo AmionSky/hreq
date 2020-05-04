@@ -6,9 +6,10 @@ edition = "2018"
 
 [features]
 default = [
-    "tokio",
     "gzip",
-    "tls"
+    "tls",
+    # "tokio",
+    # "async-std"
 ]
 async-std = [
     "async-std-lib",
@@ -60,6 +61,8 @@ async-compression = { version = "*", default-features = false, features = ["gzip
 rustls = { version = "0.17.0", default-features = false, features = [], optional = true }
 webpki = { version = "*", optional = true }
 webpki-roots = { version = "*", optional = true }
+
+exec = { path = "./exec" }
 
 [dev-dependencies]
 serde_derive = "1"

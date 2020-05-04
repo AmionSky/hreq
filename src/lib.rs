@@ -338,7 +338,7 @@ mod uri_ext;
 #[cfg(feature = "tls")]
 mod tls;
 
-#[cfg(all(test, feature = "async-std"))]
+#[cfg(test)]
 mod test;
 
 pub(crate) const VERSION: &str = env!("CARGO_PKG_VERSION");

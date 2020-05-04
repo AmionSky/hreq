@@ -138,7 +138,7 @@ where
     /// let req = Request::post("https://my-euro-server/")
     ///     // This header converts the body to iso8859-1
     ///     .header("content-type", "text/plain; charset=iso8859-1")
-    ///     .send(File::open("my-utf8-file.txt").unwrap()).block();
+    ///     .send("åäöÅÄÖ").block(); // rust strings are utf-8
     /// ```
     ///
     /// If you want to disable automatic conversion of the request body.
@@ -146,13 +146,18 @@ where
     /// ```no_run
     /// use hreq::prelude::*;
     /// use std::fs::File;
+    /// use std::io::Read;
+    ///
+    /// let mut file = File::open("my-iso8859-1-file.txt").unwrap();
+    /// let mut contents = String::new();
+    /// file.read_to_string(&mut contents).unwrap();
     ///
     /// let req = Request::post("https://my-euro-server/")
     ///     // Disable outgoing charset encoding.
     ///     .charset_encode(false)
     ///     // This header has no effect now.
     ///     .header("content-type", "text/plain; charset=iso8859-1")
-    ///     .send(File::open("my-iso8859-1-file.txt").unwrap()).block();
+    ///     .send(contents).block();
     /// ```
     ///
     /// [`charset_encode_source`]: trait.RequestBuilderExt.html#tymethod.charset_encode_source
